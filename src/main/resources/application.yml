@@ -19,7 +19,7 @@ spring:
     enabled: false
 
   jpa:
-    hibernate.ddl-auto: validate
+    hibernate.ddl-auto: create
     properties:
       hibernate:
         default_schema: 'gestao_projetos'

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,40 +36,35 @@ public class EmployeeController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<EmployeeResponseDTO> findEmployeeById(@Required @PathVariable final String id) { 
-		return ResponseEntity.ok().body(employeeService.findEmployeeById(id));
+		return ResponseEntity.ok().body(this.employeeService.findEmployeeById(id));
 	}
 
 	@GetMapping("/cpf/{cpf}")
-	public ResponseEntity<EmployeeResponseDTO> findEmployeeByCpf(@Required @PathVariable final String cpf) {
-
-		EmployeeResponseDTO dto = new EmployeeResponseDTO();
-
-		return ResponseEntity.ok().body(dto);
+	public ResponseEntity<List<EmployeeResponseDTO>> findEmployeeByCpf(@Required @PathVariable final String cpf) { 
+		return ResponseEntity.ok().body(this.employeeService.findEmployeeByCpf(cpf));
 	}
 
 	@PostMapping
 	public ResponseEntity<EmployeeResponseDTO> insertEmployee(@Required @Valid @RequestBody EmployeeRequestDTO request) {
-
-		return ResponseEntity.ok().body(new EmployeeResponseDTO());
+		return ResponseEntity.ok().body(this.employeeService.insertEmployee(request));
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<EmployeeResponseDTO> updateEmployee(@Required @Valid @RequestBody EmployeeRequestDTO request,
 			@Required @PathVariable final String id) {
-
-		return ResponseEntity.ok().body(new EmployeeResponseDTO());
+		return ResponseEntity.ok().body(this.employeeService.updateEmployee(request, id));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteEmployee(@Required @PathVariable final String id) {
-
+		this.employeeService.deleteEmployee(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/all")
 	public ResponseEntity<Page<EmployeeResponseDTO>> findAllEmployees(Pageable pageable) {
 
-		Page<EmployeeEntity> page = new PageImpl<>(List.of(new EmployeeEntity()));
+		Page<EmployeeEntity> page = this.employeeService.retrieveAllEmployees(pageable);
 
 		return ResponseEntity.ok().body(page.map(EmployeeAdapter::fromEntityToDTO));
 	}
