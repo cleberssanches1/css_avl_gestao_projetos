@@ -28,7 +28,10 @@ public class PositionEntity {
 	@Column(name = "cd_cargo")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer positionCode;
-
+	
+	@Column(name = "nm_cargo")
+	private String positionName;
+	 
 	@Column(name = "ds_cargo")
 	private String positionDescription;
 
