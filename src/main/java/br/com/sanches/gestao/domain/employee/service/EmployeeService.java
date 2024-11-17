@@ -17,15 +17,11 @@ import br.com.sanches.gestao.domain.position.model.entity.PositionEntity;
 import br.com.sanches.gestao.domain.position.repository.PositionRepository;
 import br.com.sanches.gestao.shared.exceptions.EmployeeNotFoundException;
 import br.com.sanches.gestao.shared.exceptions.PositionNotFoundException;
+import br.com.sanches.gestao.shared.utils.Constants;
 
 @Service
 public class EmployeeService {
-
-	private static final String COLLABORATOR_WITH_CPF = "Colaborador com o CPF ";
-	private static final String NOT_FOUND = " não encontrado.";
-	private static final String EMPLOYEE = "Colaborador ";
-	private static final String POSITION = "Cargo ";
-
+ 
 	private final EmployeeRepository employeeRepository;
 	private final PositionRepository positionRepository;
 	
@@ -41,7 +37,7 @@ public class EmployeeService {
 		Optional<EmployeeEntity> employeeOptional = findEmployee(id);
 
 		return employeeOptional.map(EmployeeAdapter::fromEntityToDTO)
-				.orElseThrow(() -> new EmployeeNotFoundException(EMPLOYEE + id + NOT_FOUND));
+				.orElseThrow(() -> new EmployeeNotFoundException(Constants.EMPLOYEE + id + Constants.NOT_FOUND));
 
 	}
 
@@ -54,7 +50,7 @@ public class EmployeeService {
 		List<EmployeeEntity> employeeList = employeeRepository.findEmployeeEntityByCpf(cpf);
 
 		if (employeeList.isEmpty()) {
-			throw new EmployeeNotFoundException(COLLABORATOR_WITH_CPF + cpf + NOT_FOUND);
+			throw new EmployeeNotFoundException(Constants.COLLABORATOR_WITH_CPF + cpf + Constants.NOT_FOUND);
 		}
 
 		return employeeList.stream().map(EmployeeAdapter::fromEntityToDTO).toList();
@@ -68,13 +64,13 @@ public class EmployeeService {
 		Optional<EmployeeEntity> employeeOptional = findEmployee(id);
 		
 		if(employeeOptional.isEmpty()) {
-			throw new EmployeeNotFoundException(EMPLOYEE + id + NOT_FOUND);
+			throw new EmployeeNotFoundException(Constants.EMPLOYEE + id + Constants.NOT_FOUND);
 		}
 		
 		Optional<PositionEntity> positionOptional = positionRepository.findById(request.getPosition());
 		
 		if(positionOptional.isEmpty()) {
-			throw new PositionNotFoundException(POSITION + id + NOT_FOUND);	
+			throw new PositionNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND);	
 		}
 				
 		employeeOptional.get().setCpf(request.getCpf());
@@ -90,7 +86,7 @@ public class EmployeeService {
         Optional<EmployeeEntity> employeeOptional = findEmployee(id);
 		
 		if(employeeOptional.isEmpty()) {
-			throw new EmployeeNotFoundException(EMPLOYEE + id + NOT_FOUND);
+			throw new EmployeeNotFoundException(Constants.EMPLOYEE + id + Constants.NOT_FOUND);
 		}
 		
 		employeeOptional.get().setEmployeeStatus("INATIVO");

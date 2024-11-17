@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.sanches.gestao.domain.employee.model.dto.EmployeeResponseDTO;
-import br.com.sanches.gestao.domain.projectstatus.model.dto.ProjectStatusResonseDTO;
+import br.com.sanches.gestao.domain.projectstatus.model.dto.ProjectStatusResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +32,6 @@ public class ProjectResponseDTO {
  
 	private String projectDescription;
  
-	private ProjectStatusResonseDTO projectStatus;
+	private ProjectStatusResponseDTO projectStatus;
 	
 }
