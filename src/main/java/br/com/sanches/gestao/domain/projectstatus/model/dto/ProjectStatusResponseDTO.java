@@ -1,0 +1,16 @@
+package br.com.sanches.gestao.domain.projectstatus.model.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProjectStatusResponseDTO {
+	private Integer statusCode;
+
+	private String statusDescription;
+}

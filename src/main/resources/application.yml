@@ -1,0 +1,45 @@
+server:
+  port: 8091
+
+spring:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: 'jdbc:postgresql://localhost:5432/projetoBaseDB'
+    username: 'projetoBase'
+    password: 'projetoBaseSenha'
+   
+  main:
+    allow-circular-references: true
+    banner-mode: off
+
+  liquibase:
+    enabled: false
+
+  jpa:
+    hibernate.ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: 'gestao_projetos'
+        jdbc.lob.non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+      org.hibernate.envers.default_schema: history
+
+  sql:
+    init:
+      mode: always
+      platform: postgres
+
+javax:
+  persistence:
+    schema-generation:
+      database:
+        action: validate
+
+logging:
+  level:
+    root: info
+  
