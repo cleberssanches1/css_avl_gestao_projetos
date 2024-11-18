@@ -1,0 +1,19 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="logback-json-appender.xml" />
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS},America/Sao_Paulo}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr([%X{id}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}</pattern>
+        </encoder>
+    </appender>
+    <springProfile name="!prd">
+        <root level="INFO">
+            <appender-ref ref="jsonstdout"/>
+        </root>
+    </springProfile>
+    <springProfile name="prd">
+        <root level="INFO">
+            <appender-ref ref="jsonstdout"/>
+        </root>
+    </springProfile>
+</configuration>

@@ -3,8 +3,6 @@ package br.com.sanches.gestao.domain.project.model.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import br.com.sanches.gestao.domain.employee.model.dto.EmployeeResponseDTO;
-import br.com.sanches.gestao.domain.projectstatus.model.dto.ProjectStatusResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectResponseDTO {
+public class ProjectRequestDTO {
 
 	private Integer projectCode;
  
@@ -22,7 +20,7 @@ public class ProjectResponseDTO {
  
 	private LocalDate projectStartDate;
  
-	private EmployeeResponseDTO responsibleManager;
+	private Integer responsibleManager;
  
 	private LocalDate forecastEndProject;
  
@@ -34,6 +32,6 @@ public class ProjectResponseDTO {
 	
 	private String risk;
  
-	private ProjectStatusResponseDTO projectStatus;
+	private Integer projectStatus;
 	
 }

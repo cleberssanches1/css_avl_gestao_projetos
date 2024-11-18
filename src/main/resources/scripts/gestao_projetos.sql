@@ -66,6 +66,7 @@ CREATE TABLE gestao_projetos.tb_projeto (
 	ts_modificacao timestamp(6) NULL,
 	ds_projeto varchar(255) NULL,
 	nm_projeto varchar(255) NULL,
+	ds_risco varchar(30) null,
 	CONSTRAINT tb_projeto_pkey PRIMARY KEY (cd_projeto),
 	CONSTRAINT fk29ulpljp14j0u4a03cenfxpbq FOREIGN KEY (cd_status) REFERENCES gestao_projetos.tb_status_projeto(cd_status),
 	CONSTRAINT fkliyexjsl80wwhsa3oepf7scyx FOREIGN KEY (cd_gerente_responsavel) REFERENCES gestao_projetos.tb_colaborador(cd_colaborador)

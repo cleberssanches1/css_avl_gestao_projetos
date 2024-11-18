@@ -60,6 +60,9 @@ public class ProjectEntity {
 	@ManyToOne
 	@JoinColumn(name = "cd_status", referencedColumnName = "cd_status")
 	private ProjectStatusEntity projectStatus;
+	
+	@Column(name = "ds_risco")
+	private String risk;
 
 	@Column(name = "ts_modificacao")
 	private LocalDateTime updateDate;

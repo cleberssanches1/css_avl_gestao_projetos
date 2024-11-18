@@ -24,7 +24,7 @@ public class PositionAdapter {
 		return PositionEntity.builder()
 				.positionCode(request.getPositionCode())
 				.positionDescription(request.getPositionDescription())
-				.positionName(request.getPositionStatus())
+				.positionName(request.getPositionName())
 				.positionStatus(request.getPositionStatus())
 				.build();
 	}

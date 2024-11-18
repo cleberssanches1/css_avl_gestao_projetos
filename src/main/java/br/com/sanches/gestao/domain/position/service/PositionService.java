@@ -13,12 +13,15 @@ import br.com.sanches.gestao.domain.position.model.dto.PositionRequestDTO;
 import br.com.sanches.gestao.domain.position.model.dto.PositionResponseDTO;
 import br.com.sanches.gestao.domain.position.model.entity.PositionEntity;
 import br.com.sanches.gestao.domain.position.repository.PositionRepository;
-import br.com.sanches.gestao.shared.exceptions.PositionNotFoundException;
+import br.com.sanches.gestao.shared.enums.StatusEnum;
+import br.com.sanches.gestao.shared.exceptions.DataNotFoundException;
 import br.com.sanches.gestao.shared.utils.Constants;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class PositionService {
-	 
+	  
 	private final PositionRepository positionRepository;
 	
 	@Autowired
@@ -27,33 +30,35 @@ public class PositionService {
 	}
 
 	public PositionResponseDTO findPositionById(String id) {
-
+		log.info(Constants.BUSCANDO_CARGO_COM_O_ID + id);
 		Optional<PositionEntity> positionOptional = findPosition(id);
 
 		return positionOptional.map(PositionAdapter::fromEntityToDTO)
-				.orElseThrow(() -> new PositionNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND));
+				.orElseThrow(() -> new DataNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND));
 	}
  
 	public List<PositionResponseDTO> findPositionByName(String name) {
+		log.info(Constants.BUSCANDO_CARGO_COM_O_NOME + name);
+		List<PositionEntity> positionList = positionRepository.findPositionEntityByName(name);
 
-		List<PositionEntity> PositionList = positionRepository.findPositionEntityByName(name);
-
-		if (PositionList.isEmpty()) {
-			throw new PositionNotFoundException(Constants.POSITION_WITH_NAME + name + Constants.NOT_FOUND);
+		if (positionList.isEmpty()) {
+			throw new DataNotFoundException(Constants.POSITION_WITH_NAME + name + Constants.NOT_FOUND);
 		}
 
-		return PositionList.stream().map(PositionAdapter::fromEntityToDTO).toList();
+		return positionList.stream().map(PositionAdapter::fromEntityToDTO).toList();
 	}
 	
-	public PositionResponseDTO insertPosition(PositionRequestDTO request) {		
+	public PositionResponseDTO insertPosition(PositionRequestDTO request) {	
+		log.info("inserindo cargo");
 		return PositionAdapter.fromEntityToDTO(this.positionRepository.saveAndFlush(PositionAdapter.fromDTOToEntity(request)));	 
 	}
 		
 	public PositionResponseDTO updatePosition(PositionRequestDTO request, String id) {	
+		log.info(Constants.ATUALIZANDO_O_CARGO);
 		Optional<PositionEntity> positionOptional = findPosition(id);
 		
 		if(positionOptional.isEmpty()) {
-			throw new PositionNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND);
+			throw new DataNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND);
 		}
 		 
 		positionOptional.get().setPositionDescription(request.getPositionDescription());;
@@ -64,18 +69,20 @@ public class PositionService {
 	}
 	
 	public void deletePosition(String id) {		
+		log.info(Constants.EXCLUINDO_O_CARGO);
         Optional<PositionEntity> positionOptional = findPosition(id);
 		
 		if(positionOptional.isEmpty()) {
-			throw new PositionNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND);
+			throw new DataNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND);
 		}
 		
-		positionOptional.get().setPositionStatus("INATIVO");
+		positionOptional.get().setPositionStatus(StatusEnum.INATIVO.getDescription());
 		
 		this.positionRepository.saveAndFlush(positionOptional.get());			 
 	}
 	
-	public Page<PositionEntity> retrieveAllPositions(Pageable page){		
+	public Page<PositionEntity> retrieveAllPositions(Pageable page){	
+		log.info(Constants.BUSCANDO_O_CARGOS);
 		return this.positionRepository.findAll(page); 
 	}
 	

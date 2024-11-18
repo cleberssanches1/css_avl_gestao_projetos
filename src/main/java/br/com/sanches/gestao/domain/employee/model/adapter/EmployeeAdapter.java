@@ -14,9 +14,10 @@ public class EmployeeAdapter {
 	public static EmployeeResponseDTO fromEntityToDTO(EmployeeEntity entity) {
 
 		PositionResponseDTO position = PositionResponseDTO.builder()
-				.positionCode(entity.getPosition().getPositionCode())
-				.positionName(entity.getPosition().getPositionName())
-				.positionDescription(entity.getPosition().getPositionDescription())
+				.positionCode(entity.getPosition() == null ? null: entity.getPosition().getPositionCode())
+				.positionName(entity.getPosition() == null ? null:entity.getPosition().getPositionName())
+				.positionDescription(entity.getPosition() == null ? null:entity.getPosition().getPositionDescription())
+				.positionStatus(entity.getEmployeeStatus())
 				.build();
 
 		return EmployeeResponseDTO.builder()
@@ -43,4 +44,19 @@ public class EmployeeAdapter {
 
 	}
 
+	public static EmployeeEntity fromResponseDTOToEntity(EmployeeResponseDTO request) {
+
+		PositionEntity position = PositionEntity.builder().positionCode(request.getPosition().getPositionCode()).build();
+
+		return EmployeeEntity.builder()
+				.cpf(request.getCpf())
+				.employeeCode(request.getEmployeeCode())
+				.employeeName(request.getEmployeeName())
+				.employeeStatus(request.getEmployeeStatus())
+				.position(position)
+				.startDate(request.getStartDate())
+				.build();
+
+	}
+  
 }
