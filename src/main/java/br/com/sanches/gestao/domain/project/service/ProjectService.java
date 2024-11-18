@@ -21,6 +21,7 @@ import br.com.sanches.gestao.domain.project.repository.ProjectRepository;
 import br.com.sanches.gestao.domain.projectstatus.model.dto.ProjectStatusResponseDTO;
 import br.com.sanches.gestao.domain.projectstatus.model.entity.ProjectStatusEntity;
 import br.com.sanches.gestao.domain.projectstatus.service.ProjectStatusService;
+import br.com.sanches.gestao.shared.enums.ProjectStatusesEnum;
 import br.com.sanches.gestao.shared.exceptions.DataNotFoundException;
 import br.com.sanches.gestao.shared.exceptions.ProjectNotSuitableForExclusionException;
 import br.com.sanches.gestao.shared.utils.Constants;
@@ -108,7 +109,7 @@ public class ProjectService {
 			throw new DataNotFoundException(Constants.PROJECT + id + Constants.NOT_FOUND);
 		}
 		
-		if(this.isTheProjectEligibleForDeletion(projectOptional.get())) {
+		if(this.isTheProjectNotEligibleForDeletion(projectOptional.get())) {
 			throw new ProjectNotSuitableForExclusionException(Constants.PROJECT_NOT_SUITABLE_FOR_EXCLUSION + projectOptional.get().getProjectStatus().getStatusDescription());
 		}
 		 
@@ -120,8 +121,10 @@ public class ProjectService {
 		return this.projectRepository.findAll(page); 
 	}
 	
-	private boolean isTheProjectEligibleForDeletion(ProjectEntity projec) {
-		return projec.getProjectStatus().getStatusCode() > 3;
+	private boolean isTheProjectNotEligibleForDeletion(ProjectEntity projec) {	 
+		 return ProjectStatusesEnum.INICIADO.getCode().equals(projec.getProjectStatus().getStatusCode()) 
+				 || ProjectStatusesEnum.EM_ANDAMENTO.getCode().equals(projec.getProjectStatus().getStatusCode()) 
+				 || ProjectStatusesEnum.ENCERRADO.getCode().equals(projec.getProjectStatus().getStatusCode());
 	}
 	 
 	private Optional<ProjectEntity> findProject(String id) {

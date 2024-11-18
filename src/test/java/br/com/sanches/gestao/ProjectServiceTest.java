@@ -38,6 +38,7 @@ import br.com.sanches.gestao.domain.project.service.ProjectService;
 import br.com.sanches.gestao.domain.projectstatus.model.dto.ProjectStatusResponseDTO;
 import br.com.sanches.gestao.domain.projectstatus.model.entity.ProjectStatusEntity;
 import br.com.sanches.gestao.domain.projectstatus.service.ProjectStatusService;
+import br.com.sanches.gestao.shared.enums.ProjectStatusesEnum;
 import br.com.sanches.gestao.shared.exceptions.DataNotFoundException;
 import br.com.sanches.gestao.shared.exceptions.ProjectNotSuitableForExclusionException;
 
@@ -132,7 +133,7 @@ class ProjectServiceTest {
         request.setProjectDescription(TESTE);
         request.setProjectName(TESTE);
         request.setProjectStartDate(LocalDate.now());
-        request.setProjectStatus(1);
+        request.setProjectStatus(ProjectStatusesEnum.EM_ANALISE.getCode());
         request.setRealEndProject(LocalDate.now().plusDays(10L));
         request.setResponsibleManager(1);
         request.setRisk(ALTO);
@@ -206,7 +207,7 @@ class ProjectServiceTest {
         
         String projectId = "1";
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setProjectStatus(ProjectStatusEntity.builder().statusCode(4).build());
+        projectEntity.setProjectStatus(ProjectStatusEntity.builder().statusCode(ProjectStatusesEnum.INICIADO.getCode()).build());
         when(projectRepository.findById(1)).thenReturn(Optional.of(projectEntity));
  
         assertThrows(ProjectNotSuitableForExclusionException.class, () -> projectService.deleteProject(projectId));
