@@ -40,7 +40,7 @@ public class ProjectStatusController {
 	}
 
 	@GetMapping("/name/{name}")
-	public ResponseEntity<List<ProjectStatusResponseDTO>> findProjectStatusByCpf(@Required @PathVariable final String name) { 
+	public ResponseEntity<List<ProjectStatusResponseDTO>> findProjectStatusByName(@Required @PathVariable final String name) { 
 		return ResponseEntity.ok().body(this.projectStatusService.findProjectStatusByName(name));
 	}
 

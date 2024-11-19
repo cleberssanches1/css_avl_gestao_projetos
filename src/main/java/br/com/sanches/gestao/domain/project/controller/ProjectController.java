@@ -40,8 +40,8 @@ public class ProjectController {
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<ProjectResponseDTO>> findProjectByName(@Required @PathVariable final String name) {
-		return ResponseEntity.ok().body(this.projectService.findProjectByName(name));
+	public ResponseEntity<List<ProjectResponseDTO>> findProjectByName(@Required @PathVariable final String nome) {
+		return ResponseEntity.ok().body(this.projectService.findProjectByName(nome));
 	}
 
 	@PostMapping
