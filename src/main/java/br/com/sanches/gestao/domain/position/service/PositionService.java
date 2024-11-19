@@ -61,7 +61,7 @@ public class PositionService {
 			throw new DataNotFoundException(Constants.POSITION + id + Constants.NOT_FOUND);
 		}
 		 
-		positionOptional.get().setPositionDescription(request.getPositionDescription());;
+		positionOptional.get().setPositionDescription(request.getPositionDescription());
 		positionOptional.get().setPositionName(request.getPositionName()); 
 		positionOptional.get().setPositionStatus(request.getPositionStatus());
 		 
