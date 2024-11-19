@@ -40,7 +40,7 @@ public class PositionController {
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<PositionResponseDTO>> findPositionByCpf(@Required @PathVariable final String nome) { 
+	public ResponseEntity<List<PositionResponseDTO>> findPositionByName(@Required @PathVariable final String nome) { 
 		return ResponseEntity.ok().body(this.positionService.findPositionByName(nome));
 	}
 
